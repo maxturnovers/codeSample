@@ -1,0 +1,40 @@
+/*
+Small segment of code for dragging an object horizontally by touch with multitouch enabled.
+*/
+
+
+for(i=0; i <= 4; i+=1) //allows for up to five separate touches
+{
+    //Check if screen has been touched and that touch was on the object
+    if(MouseCheckButtonPressed(i, mb_any) && MouseX(i)>=x-sprWidth/2 && MouseX(i)<=x+sprWidth/2 && MouseY(i)>=y-sprHeight/2 && MouseY(i)<=y+sprHeight/2)
+    {
+        if immovable > 0
+        {
+            immovable -= 1; //one touch closer to making the object movable
+            image_index = (1); //display object as an immovable object
+        }
+        else
+        {
+            immovableObj = false; //object is movable
+            if moveCamera //check that it is a non-paused state
+            {
+                followMouse = true; //obj will follow
+                following = i; //which touch the object should follow
+            }
+        }
+        
+    }
+
+    //Check to make sure touch remains
+    if!(MouseCheckButton(following, mb_any))
+    {
+        followMouse = false;
+    }
+
+    //move object to touch
+    if followMouse
+    {
+        x = MouseX(following);
+    }
+
+}
